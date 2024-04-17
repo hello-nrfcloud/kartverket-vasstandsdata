@@ -34,8 +34,6 @@ jobs:
     env:
       FORCE_COLOR: 3
       JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: 1
-      OPENSSL_LAMBDA_CONTAINER_TAG:
-        ${{ github.event.inputs.openssl_lambda_tag }}
 
     steps:
       - uses: actions/checkout@v4
