@@ -53,4 +53,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh workflow run deploy.yaml \
-            -F ref=${{ needs.e2e-tests.outputs.ref }}
+            -F ref=${{ github.sha }}
