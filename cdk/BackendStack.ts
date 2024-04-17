@@ -10,7 +10,10 @@ import {
 import { STACK_NAME } from './stackConfig.js'
 import type { BackendLambdas } from './lambdas.js'
 import type { PackedLayer } from '@bifravst/aws-cdk-lambda-helpers/layer'
-import { LambdaSource } from '@bifravst/aws-cdk-lambda-helpers/cdk'
+import {
+	LambdaLogGroup,
+	LambdaSource,
+} from '@bifravst/aws-cdk-lambda-helpers/cdk'
 import { ContinuousDeployment } from './resources/ContinuousDeployment.js'
 import { Permissions } from '@bifravst/aws-ssm-settings-helpers/cdk'
 
@@ -57,6 +60,7 @@ export class BackendStack extends Stack {
 				STACK_NAME: Stack.of(this).stackName,
 				VERSION: this.node.getContext('version'),
 			},
+			...new LambdaLogGroup(this, 'getWaterLevelsLogs'),
 		})
 
 		const rule = new Events.Rule(this, 'rule', {
