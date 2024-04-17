@@ -1,0 +1,88 @@
+{
+  "name": "@hello.nrfcloud.com/kartverket-vasstand",
+  "version": "0.0.0-development",
+  "description": "Publishes the seawater levels from https://www.kartverket.no/ as custom devices on hello.nrfcloud.com/map",
+  "type": "module",
+  "scripts": {
+    "test": "npx globstar -- npx tsx --test --test-reporter spec \"!(dist|node_modules)/**/*.spec.ts\"",
+    "prepare": "husky && check-node-version --package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hello-nrfcloud/kartverket-vasstand.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hello-nrfcloud/kartverket-vasstand/issues"
+  },
+  "homepage": "https://github.com/hello-nrfcloud/kartverket-vasstand#readme",
+  "keywords": [
+    "nordicsemiconductor",
+    "cellular-iot",
+    "hello-nrfcloud",
+    "map",
+    "aws",
+    "cdk"
+  ],
+  "author": "Nordic Semiconductor ASA | nordicsemi.no",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@aws-sdk/client-iam": "3.556.0",
+    "@aws-sdk/client-ssm": "3.556.0",
+    "@bifravst/aws-cdk-lambda-helpers": "1.4.2",
+    "@bifravst/ci": "2.0.1",
+    "@bifravst/eslint-config-typescript": "6.0.23",
+    "@bifravst/prettier-config": "1.0.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "@types/aws-lambda": "8.10.137",
+    "@types/xml2js": "0.4.14",
+    "aws-cdk": "2.137.0",
+    "aws-cdk-lib": "2.137.0",
+    "cdk": "2.137.0",
+    "check-node-version": "4.2.1",
+    "commitlint": "19.2.2",
+    "constructs": "10.3.0",
+    "globstar": "1.0.0",
+    "husky": "9.0.11",
+    "nock": "14.0.0-beta.5",
+    "tsx": "4.7.2"
+  },
+  "lint-staged": {
+    "*.{md,json,yaml,yml}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint"
+    ]
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=9"
+  },
+  "release": {
+    "branches": [
+      "saga"
+    ],
+    "remoteTags": true,
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false,
+          "failTitle": false
+        }
+      ]
+    ]
+  },
+  "prettier": "@bifravst/prettier-config",
+  "dependencies": {
+    "@bifravst/aws-ssm-settings-helpers": "1.1.0",
+    "@hello.nrfcloud.com/proto": "6.5.3",
+    "@hello.nrfcloud.com/proto-map": "5.3.0",
+    "@nordicsemiconductor/from-env": "3.0.1",
+    "mqtt": "5.5.2",
+    "xml2js": "0.6.2"
+  }
+}
