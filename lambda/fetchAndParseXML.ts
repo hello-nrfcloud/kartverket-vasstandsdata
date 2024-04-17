@@ -29,6 +29,22 @@ export const fetchAndParseXML = async <Schema extends TObject>(
 	}
 }
 
+const code = Type.String({
+	minLength: 1,
+	examples: ['ANX'],
+	title: 'Station code',
+})
+const latitude = Type.Number({
+	minimum: -90,
+	maximum: 90,
+	examples: [69.326067],
+})
+const longitude = Type.Number({
+	minimum: -180,
+	maximum: 180,
+	examples: [16.134848],
+})
+
 export const stationInfo = Type.Object({
 	tide: Type.Object({
 		stationinfo: Type.Array(
@@ -36,11 +52,11 @@ export const stationInfo = Type.Object({
 				location: Type.Array(
 					Type.Object({
 						$: Type.Object({
-							name: Type.String({ minLength: 1 }), // e.g. Andenes
-							code: Type.String({ minLength: 1 }), // e.g. ANX
-							latitude: Type.Number({ minimum: -90, maximum: 90 }), // e.g. 69.326067
-							longitude: Type.Number({ minimum: -180, maximum: 180 }), // e.g. 16.134848
-							type: Type.String({ minLength: 1 }), // e.g. PERM
+							name: Type.String({ minLength: 1, examples: ['Andenes'] }),
+							code,
+							latitude,
+							longitude,
+							type: Type.String({ minLength: 1, examples: ['PERM'] }),
 						}),
 					}),
 				),
@@ -58,9 +74,9 @@ export const waterLevelInfo = Type.Object({
 				location: Type.Array(
 					Type.Object({
 						$: Type.Object({
-							code: Type.String({ minLength: 1 }), // e.g. ANX
-							latitude: Type.Number({ minimum: -90, maximum: 90 }), // e.g. 69.326067
-							longitude: Type.Number({ minimum: -180, maximum: 180 }), // e.g. 16.134848
+							code,
+							latitude,
+							longitude,
 						}),
 					}),
 				),
@@ -69,8 +85,12 @@ export const waterLevelInfo = Type.Object({
 						waterlevel: Type.Array(
 							Type.Object({
 								$: Type.Object({
-									value: Type.Number({ minimum: -50, maximum: 500 }), // e.g. 76.4
-									time: Type.Date(), // e.g. 2024-03-01T09:00:00+01:00
+									value: Type.Number({
+										minimum: -50,
+										maximum: 500,
+										examples: [76.4],
+									}),
+									time: Type.Date({ examples: ['2024-03-01T09:00:00+01:00'] }),
 								}),
 							}),
 						),
