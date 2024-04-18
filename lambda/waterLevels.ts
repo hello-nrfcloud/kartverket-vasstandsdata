@@ -1,6 +1,5 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
 import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
-import { getWaterLevelMeasurements } from './getWaterLevelInfo.js'
 import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
 import { lwm2mToSenML } from '@hello.nrfcloud.com/proto-map'
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
@@ -16,6 +15,7 @@ import { getFetchIntervalForAPI } from './getFetchInterval.js'
 import { getDeviceCredentials } from '../settings/credentials.js'
 import { fromEnv } from '@nordicsemiconductor/from-env'
 import { getAccountId } from '../settings/nrfcloud.js'
+import type { Station, StationWaterLevel, WaterLevel } from './Station.js'
 
 const { stackName } = fromEnv({
 	stackName: 'STACK_NAME',
@@ -39,32 +39,47 @@ const getLocation = async () => {
 }
 
 const isValid = validateWithTypeBox(SenML)
-const { from, to } = getFetchIntervalForAPI()
-const getWaterLevelForStations = getWaterLevelMeasurements({
-	getWaterLevelsForStation: async (station) => {
-		const res = await fetchAndParseXML(
-			waterLevelInfo,
-			`https://api.sehavniva.no/tideapi.php?tide_request=locationdata&lat=${station.location.lat}&lon=${station.location.lng}&datatype=OBS&lang=en&place=&dst=1&refcode=CD&tzone=0&fromtime=${from}&totime=${to}&interval=10`,
-		)
-		if ('error' in res) {
-			console.error(res.error)
-			return []
-		}
-		const converted = convertWaterLevelsAPIResponse(res.value)
-		if ('error' in converted) {
-			console.error(converted.error)
-			return []
-		}
-		return converted
-	},
-})
+
+const getWaterLevelsForStation = async (
+	station: Station,
+	from: string,
+	to: string,
+) => {
+	const res = await fetchAndParseXML(
+		waterLevelInfo,
+		`https://api.sehavniva.no/tideapi.php?tide_request=locationdata&lat=${station.location.lat}&lon=${station.location.lng}&datatype=OBS&lang=en&place=&dst=1&refcode=CD&tzone=0&fromtime=${from}&totime=${to}&interval=10`,
+	)
+	if ('error' in res) {
+		console.error(res.error)
+		return []
+	}
+	const converted = convertWaterLevelsAPIResponse(res.value)
+	if ('error' in converted) {
+		console.error(converted.error)
+		return []
+	}
+	return converted
+}
 
 export const handler = async (): Promise<void> => {
 	const stations = await getLocation()
 	if ('error' in stations) {
 		return
 	}
-	const waterLevelMeasurements = await getWaterLevelForStations(stations)
+	const waterLevelMeasurements: Array<StationWaterLevel> = []
+	const { from, to } = getFetchIntervalForAPI()
+	for (const station of stations) {
+		const readings = await getWaterLevelsForStation(station, from, to)
+		if (readings.length === 0) {
+			console.debug(`No readings found for station ${station.stationCode}!`)
+			continue
+		}
+		waterLevelMeasurements.push({
+			station,
+			waterLevel: readings.pop() as WaterLevel,
+		})
+	}
+
 	// get stations and keys from AWS parameter store
 	for (const station of creds) {
 		const stationObject = waterLevelMeasurements.find(

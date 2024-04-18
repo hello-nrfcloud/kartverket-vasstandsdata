@@ -2,7 +2,7 @@ import {
 	LwM2MObjectID,
 	type LwM2MObjectInstance,
 } from '@hello.nrfcloud.com/proto-map'
-import type { StationWaterLevel } from './getWaterLevelInfo.js'
+import type { StationWaterLevel } from './Station.js'
 
 export const waterLevelObjectToLwM2M = (
 	sw: StationWaterLevel,
