@@ -82,7 +82,7 @@
     "@hello.nrfcloud.com/proto": "7.3.3",
     "@hello.nrfcloud.com/proto-map": "7.1.1",
     "@nordicsemiconductor/from-env": "3.0.1",
-    "mqtt": "5.5.3",
+    "mqtt": "5.5.4",
     "xml2js": "0.6.2"
   }
 }
