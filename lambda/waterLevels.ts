@@ -1,7 +1,7 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
 import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
 import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
-import { lwm2mToSenML } from '@hello.nrfcloud.com/proto-map'
+import { lwm2mToSenML, type SenMLType } from '@hello.nrfcloud.com/proto-map'
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import { SenML } from '@hello.nrfcloud.com/proto-map'
 import { publishPayload as publishPayload } from './publishPayload.js'
@@ -88,9 +88,18 @@ export const handler = async (): Promise<void> => {
 		if (stationObject === undefined) {
 			return
 		}
-		const LwM2MObject = waterLevelObjectToLwM2M(stationObject)
-		const payload = lwm2mToSenML(LwM2MObject)
-		const maybeValidSenML = isValid(payload)
+		const lwm2mObjects = waterLevelObjectToLwM2M(stationObject)
+		const senMLPayloads: Array<SenMLType> = []
+		for (const o of lwm2mObjects) {
+			const maybeAsSenML = lwm2mToSenML(o)
+			if ('errors' in maybeAsSenML) {
+				console.error(JSON.stringify(maybeAsSenML.errors))
+				console.error(`Could not convert LwM2M object`)
+				return
+			}
+			senMLPayloads.push(maybeAsSenML.senML)
+		}
+		const maybeValidSenML = isValid(senMLPayloads.flat())
 		if ('errors' in maybeValidSenML) {
 			console.error(JSON.stringify(maybeValidSenML.errors))
 			console.error(`Invalid SenML message`)
