@@ -10,12 +10,9 @@ import {
 import { STACK_NAME } from './stackConfig.js'
 import type { BackendLambdas } from './lambdas.js'
 import type { PackedLayer } from '@bifravst/aws-cdk-lambda-helpers/layer'
-import {
-	LambdaLogGroup,
-	LambdaSource,
-} from '@bifravst/aws-cdk-lambda-helpers/cdk'
+import { PackedLambdaFn } from '@bifravst/aws-cdk-lambda-helpers/cdk'
+import { LambdaSource } from '@bifravst/aws-cdk-lambda-helpers/cdk'
 import { ContinuousDeployment } from './resources/ContinuousDeployment.js'
-import { Permissions } from '@bifravst/aws-ssm-settings-helpers/cdk'
 
 export class BackendStack extends Stack {
 	constructor(
@@ -48,26 +45,22 @@ export class BackendStack extends Stack {
 			compatibleRuntimes: [Lambda.Runtime.NODEJS_20_X],
 		})
 
-		const getWaterLevels = new Lambda.Function(this, 'getWaterLevels', {
-			handler: lambdaSources.waterLevels.handler,
-			code: new LambdaSource(this, lambdaSources.waterLevels).code,
-			runtime: Lambda.Runtime.NODEJS_20_X,
-			layers: [baseLayer],
-			timeout: Duration.seconds(60),
-			memorySize: 1024,
-			initialPolicy: [Permissions(Stack.of(this))],
-			environment: {
-				STACK_NAME: Stack.of(this).stackName,
-				VERSION: this.node.getContext('version'),
+		const getWaterLevels = new PackedLambdaFn(
+			this,
+			'getWaterLevels',
+			lambdaSources.waterLevels,
+			{
+				layers: [baseLayer],
+				timeout: Duration.seconds(60),
+				memorySize: 1024,
 			},
-			...new LambdaLogGroup(this, 'getWaterLevelsLogs'),
-		})
+		)
 
 		const rule = new Events.Rule(this, 'rule', {
 			description: `Rule to schedule waterLevel lambda invocations`,
 			schedule: Events.Schedule.rate(Duration.hours(1)),
 		})
-		rule.addTarget(new EventTargets.LambdaFunction(getWaterLevels))
+		rule.addTarget(new EventTargets.LambdaFunction(getWaterLevels.fn))
 
 		const cd = new ContinuousDeployment(this, {
 			repository,
