@@ -26,8 +26,8 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@aws-sdk/client-iam": "3.574.0",
-    "@aws-sdk/client-ssm": "3.574.0",
+    "@aws-sdk/client-iam": "3.575.0",
+    "@aws-sdk/client-ssm": "3.575.0",
     "@bifravst/aws-cdk-lambda-helpers": "1.7.19",
     "@bifravst/ci": "2.0.1",
     "@bifravst/eslint-config-typescript": "6.0.25",
