@@ -1,5 +1,5 @@
+import type { App } from 'aws-cdk-lib'
 import {
-	App,
 	Stack,
 	aws_lambda as Lambda,
 	Duration,

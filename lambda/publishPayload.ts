@@ -1,4 +1,5 @@
-import { MqttClient, connect } from 'mqtt'
+import type { MqttClient } from 'mqtt'
+import { connect } from 'mqtt'
 import type { SenMLType } from '@hello.nrfcloud.com/proto-map'
 import type { Credentials } from '../settings/credentials.js'
 
