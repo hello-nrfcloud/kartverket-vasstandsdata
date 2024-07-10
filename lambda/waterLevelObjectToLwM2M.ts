@@ -1,8 +1,9 @@
 import {
 	LwM2MObjectID,
 	type LwM2MObjectInstance,
-} from '@hello.nrfcloud.com/proto-map'
+} from '@hello.nrfcloud.com/proto-map/lwm2m'
 import type { StationWaterLevel } from './Station.js'
+import { toTime } from './toTime.js'
 
 export const waterLevelObjectToLwM2M = (
 	sw: StationWaterLevel,
@@ -16,7 +17,7 @@ export const waterLevelObjectToLwM2M = (
 				'1': sw.station.location.lng,
 				'6': 'Fixed',
 				'3': 1,
-				'99': sw.waterLevel.time,
+				'99': toTime(sw.waterLevel.time),
 			},
 		},
 		{
@@ -25,7 +26,7 @@ export const waterLevelObjectToLwM2M = (
 			Resources: {
 				'0': sw.waterLevel.level,
 				'1': sw.station.stationCode,
-				'99': sw.waterLevel.time,
+				'99': toTime(sw.waterLevel.time),
 			},
 		},
 	]

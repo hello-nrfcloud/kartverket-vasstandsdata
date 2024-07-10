@@ -1,8 +1,9 @@
-import { LwM2MObjectID } from '@hello.nrfcloud.com/proto-map'
+import { LwM2MObjectID } from '@hello.nrfcloud.com/proto-map/lwm2m'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
 import type { StationWaterLevel } from './Station.js'
+import { toTime } from './toTime.js'
 
 void describe('waterLevelObjectToLWM2M', () => {
 	void it('should convert locationData to LwM2M', () => {
@@ -28,7 +29,7 @@ void describe('waterLevelObjectToLWM2M', () => {
 					'1': 16.134848,
 					'6': 'Fixed',
 					'3': 1,
-					'99': new Date('2024-03-01T08:00:00.000Z'),
+					'99': toTime(new Date('2024-03-01T08:00:00.000Z')),
 				},
 			},
 			{
@@ -37,7 +38,7 @@ void describe('waterLevelObjectToLWM2M', () => {
 				Resources: {
 					'0': 108.2,
 					'1': 'ANX',
-					'99': new Date('2024-03-01T08:00:00.000Z'),
+					'99': toTime(new Date('2024-03-01T08:00:00.000Z')),
 				},
 			},
 		]

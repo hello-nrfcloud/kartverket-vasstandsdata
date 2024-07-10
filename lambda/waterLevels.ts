@@ -1,9 +1,12 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
 import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
 import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
-import { lwm2mToSenML, type SenMLType } from '@hello.nrfcloud.com/proto-map'
+import {
+	lwm2mToSenML,
+	type SenMLType,
+} from '@hello.nrfcloud.com/proto-map/senml'
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
-import { SenML } from '@hello.nrfcloud.com/proto-map'
+import { SenML } from '@hello.nrfcloud.com/proto-map/senml'
 import { publishPayload as publishPayload } from './publishPayload.js'
 import {
 	fetchAndParseXML,

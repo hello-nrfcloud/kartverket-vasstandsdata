@@ -26,7 +26,7 @@ export const getDeviceCredentials = async ({
 		if (station === undefined) continue
 		if (property === undefined) continue
 		if (credentialData[station] === undefined) credentialData[station] = {}
-		credentialData[station]![property] = value
+		credentialData[station][property] = value
 	}
 
 	return Object.entries(credentialData)
