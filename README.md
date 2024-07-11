@@ -75,6 +75,41 @@ aws ssm put-parameter --name /${STACK_NAME:-kartverket-vasstand}/credentials/<st
 aws ssm put-parameter --name /${STACK_NAME:-kartverket-vasstand}/credentials/<station>/privateKey --type String --value "<privateKey>"
 ```
 
+#### Station IDs
+
+| Station ID |
+| ---------- |
+| `ANX`      |
+| `BGO`      |
+| `BOO`      |
+| `BRJ`      |
+| `HFT`      |
+| `HAR`      |
+| `HEI`      |
+| `HRO`      |
+| `HVG`      |
+| `KAB`      |
+| `KSU`      |
+| `LEH`      |
+| `MSU`      |
+| `MAY`      |
+| `NVK`      |
+| `NYA`      |
+| `OSC`      |
+| `OSL`      |
+| `RVK`      |
+| `SBG`      |
+| `SIE`      |
+| `SOY`      |
+| `SVG`      |
+| `TRG`      |
+| `TOS`      |
+| `TRD`      |
+| `TAZ`      |
+| `VAW`      |
+| `VIK`      |
+| `AES`      |
+
 ## Continuous Deployment using GitHub Actions
 
 After deploying the stack manually once,

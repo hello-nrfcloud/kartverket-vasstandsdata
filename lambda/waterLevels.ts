@@ -72,46 +72,55 @@ export const handler = async (): Promise<void> => {
 	const waterLevelMeasurements: Array<StationWaterLevel> = []
 	const { from, to } = getFetchIntervalForAPI()
 	for (const station of stations) {
+		console.debug('Fetching water levels for station', station.stationCode)
 		const readings = await getWaterLevelsForStation(station, from, to)
 		if (readings.length === 0) {
 			console.debug(`No readings found for station ${station.stationCode}!`)
 			continue
 		}
+		const reading = readings.pop() as WaterLevel
 		waterLevelMeasurements.push({
 			station,
-			waterLevel: readings.pop() as WaterLevel,
+			waterLevel: reading,
 		})
 	}
 
-	// get stations and keys from AWS parameter store
-	for (const station of creds) {
-		const stationObject = waterLevelMeasurements.find(
-			(obj) => obj.station.stationCode === station.station,
-		)
-		if (stationObject === undefined) {
+	console.debug('measurements', JSON.stringify(waterLevelMeasurements))
+
+	await Promise.allSettled(waterLevelMeasurements.map(publishMeasurement))
+}
+
+const publishMeasurement = async (measurement: StationWaterLevel) => {
+	const lwm2mObjects = waterLevelObjectToLwM2M(measurement)
+	const senMLPayloads: Array<SenMLType> = []
+	for (const o of lwm2mObjects) {
+		const maybeAsSenML = lwm2mToSenML(o)
+		if ('errors' in maybeAsSenML) {
+			console.error(JSON.stringify(maybeAsSenML.errors))
+			console.error(`Could not convert LwM2M object`)
 			return
 		}
-		const lwm2mObjects = waterLevelObjectToLwM2M(stationObject)
-		const senMLPayloads: Array<SenMLType> = []
-		for (const o of lwm2mObjects) {
-			const maybeAsSenML = lwm2mToSenML(o)
-			if ('errors' in maybeAsSenML) {
-				console.error(JSON.stringify(maybeAsSenML.errors))
-				console.error(`Could not convert LwM2M object`)
-				return
-			}
-			senMLPayloads.push(maybeAsSenML.senML)
-		}
-		const maybeValidSenML = isValid(senMLPayloads.flat())
-		if ('errors' in maybeValidSenML) {
-			console.error(JSON.stringify(maybeValidSenML.errors))
-			console.error(`Invalid SenML message`)
-			return
-		}
-		await publishPayload({
-			credentials: station,
-			payload: maybeValidSenML.value,
-			accountId,
-		})
+		senMLPayloads.push(maybeAsSenML.senML)
 	}
+	const maybeValidSenML = isValid(senMLPayloads.flat())
+	if ('errors' in maybeValidSenML) {
+		console.error(JSON.stringify(maybeValidSenML.errors))
+		console.error(`Invalid SenML message`)
+		return
+	}
+	const station = creds.find(
+		(cred) => cred.station === measurement.station.stationCode,
+	)
+	if (station === undefined) {
+		console.error(
+			`Could not find credentials for station ${measurement.station.stationCode}`,
+		)
+		return
+	}
+	await publishPayload({
+		credentials: station,
+		payload: maybeValidSenML.value,
+		accountId,
+		debug: console.debug,
+	})
 }

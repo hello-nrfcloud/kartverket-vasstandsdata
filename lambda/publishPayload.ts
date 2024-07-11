@@ -1,6 +1,5 @@
-import type { MqttClient } from 'mqtt'
-import { connect } from 'mqtt'
 import type { SenMLType } from '@hello.nrfcloud.com/proto-map/senml'
+import { connect } from 'mqtt'
 import type { Credentials } from '../settings/credentials.js'
 
 const amazonRootCA1 =
@@ -29,12 +28,15 @@ export const publishPayload = async ({
 	credentials: { deviceId, certificate, privateKey },
 	payload,
 	accountId,
+	debug,
 }: {
 	credentials: Credentials
 	payload: SenMLType
 	accountId: string
-}): Promise<void> => {
-	const conn = await new Promise<MqttClient>((resolve, reject) => {
+	debug?: (...args: any[]) => void
+}): Promise<void> =>
+	new Promise<void>((resolve, reject) => {
+		debug?.(deviceId, `Connecting to mqtt.nrfcloud.com`)
 		const client = connect({
 			host: 'mqtt.nrfcloud.com',
 			port: 8883,
@@ -45,25 +47,48 @@ export const publishPayload = async ({
 			key: privateKey,
 			cert: certificate,
 			ca: amazonRootCA1,
+			clean: true,
+			connectTimeout: 10 * 1000,
 		})
 
-		client.on('disconnect', () => {
-			console.debug('disconnected')
+		client.on('offline', () => {
+			debug?.(deviceId, `Offline`)
+			reject(new ConnectError(deviceId))
 		})
-		client.on('error', () => {
-			console.debug('error')
-			reject(new Error('Error'))
+		client.on('disconnect', () => {
+			debug?.(deviceId, `Disconnected from mqtt.nrfcloud.com`)
+		})
+		client.on('error', (err) => {
+			debug?.(deviceId, `Error`, err)
+			reject(new ConnectError(deviceId))
 		})
 		client.on('connect', () => {
-			console.log(`Connected`, deviceId)
-			resolve(client)
+			debug?.(deviceId, `Connected to mqtt.nrfcloud.com`)
+			const topic = `prod/${accountId}/m/d/${deviceId}/d2c/senml`
+			debug?.(deviceId, `Publishing to ${topic}`)
+			const t2 = setTimeout(() => {
+				reject(new PublishTimeoutError(deviceId))
+			}, 60 * 1000)
+			client.publish(topic, JSON.stringify(payload), { qos: 1 }, (err) => {
+				clearTimeout(t2)
+				if (err !== undefined) {
+					reject(err)
+				}
+				debug?.(deviceId, `Published payload`, JSON.stringify(payload))
+				client.end()
+				resolve()
+			})
 		})
 	})
-	const topic = `prod/${accountId}/m/senml/${deviceId}`
-	const publish = (payload: SenMLType) => {
-		conn.publish(topic, JSON.stringify(payload))
-	}
-	publish(payload)
 
-	conn.end()
+class PublishTimeoutError extends Error {
+	constructor(deviceId: string) {
+		super(`Timed out publishing for device ${deviceId}!`)
+	}
+}
+
+class ConnectError extends Error {
+	constructor(deviceId: string) {
+		super(`Failed to connect ${deviceId}!`)
+	}
 }
