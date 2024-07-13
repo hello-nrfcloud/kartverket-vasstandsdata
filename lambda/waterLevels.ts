@@ -16,7 +16,7 @@ import {
 import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
 import { getFetchIntervalForAPI } from './getFetchInterval.js'
 import { getDeviceCredentials } from '../settings/credentials.js'
-import { fromEnv } from '@nordicsemiconductor/from-env'
+import { fromEnv } from '@bifravst/from-env'
 import { getAccountId } from '../settings/nrfcloud.js'
 import type { Station, StationWaterLevel, WaterLevel } from './Station.js'
 

@@ -10,7 +10,7 @@ const dependencies: Array<keyof (typeof pJson)['dependencies']> = [
 	'@hello.nrfcloud.com/proto',
 	'mqtt',
 	'@bifravst/aws-ssm-settings-helpers',
-	'@nordicsemiconductor/from-env',
+	'@bifravst/from-env',
 ]
 
 export const packBaseLayer = async (): Promise<PackedLayer> =>
