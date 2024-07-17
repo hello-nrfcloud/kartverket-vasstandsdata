@@ -42,7 +42,7 @@
     "commitlint": "19.3.0",
     "constructs": "10.3.0",
     "globstar": "1.0.0",
-    "husky": "9.0.11",
+    "husky": "9.1.0",
     "nock": "14.0.0-beta.8",
     "tsx": "4.16.2"
   },
