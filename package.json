@@ -28,7 +28,7 @@
   "devDependencies": {
     "@aws-sdk/client-iam": "3.616.0",
     "@aws-sdk/client-ssm": "3.616.0",
-    "@bifravst/aws-cdk-lambda-helpers": "1.9.1",
+    "@bifravst/aws-cdk-lambda-helpers": "1.9.2",
     "@bifravst/ci": "2.0.2",
     "@bifravst/eslint-config-typescript": "6.1.10",
     "@bifravst/prettier-config": "1.0.4",
@@ -78,10 +78,10 @@
   },
   "prettier": "@bifravst/prettier-config",
   "dependencies": {
-    "@bifravst/aws-ssm-settings-helpers": "1.1.45",
+    "@bifravst/aws-ssm-settings-helpers": "1.1.46",
     "@bifravst/from-env": "3.0.2",
-    "@hello.nrfcloud.com/proto": "14.2.0",
-    "@hello.nrfcloud.com/proto-map": "13.2.3",
+    "@hello.nrfcloud.com/proto": "14.2.2",
+    "@hello.nrfcloud.com/proto-map": "14.1.0",
     "mqtt": "5.8.1",
     "xml2js": "0.6.2"
   }
