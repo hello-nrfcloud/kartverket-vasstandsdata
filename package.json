@@ -81,7 +81,7 @@
     "@bifravst/aws-ssm-settings-helpers": "1.2.9",
     "@bifravst/from-env": "3.0.2",
     "@hello.nrfcloud.com/proto": "14.2.6",
-    "@hello.nrfcloud.com/proto-map": "14.2.0",
+    "@hello.nrfcloud.com/proto-map": "16.1.0",
     "mqtt": "5.9.1",
     "xml2js": "0.6.2"
   }
