@@ -1,15 +1,15 @@
-import { describe, it } from 'node:test'
+import { readFile } from 'fs/promises'
 import nock from 'nock'
 import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
 import path from 'path'
-import { readFile } from 'fs/promises'
-import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.js'
-import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
 import {
 	fetchAndParseXML,
 	stationInfo,
 	waterLevelInfo,
 } from './fetchAndParseXML.js'
+import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.js'
+import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
 
 void describe('fetchXML', () => {
 	void it('should fetch XML data and parse it for stationInfo', async () => {

@@ -1,9 +1,9 @@
 import { LwM2MObjectID } from '@hello.nrfcloud.com/proto-map/lwm2m'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
 import type { StationWaterLevel } from './Station.js'
 import { toTime } from './toTime.js'
+import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
 
 void describe('waterLevelObjectToLWM2M', () => {
 	void it('should convert locationData to LwM2M', () => {

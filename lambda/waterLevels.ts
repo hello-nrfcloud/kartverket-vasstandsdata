@@ -1,24 +1,24 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
-import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
-import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
+import { fromEnv } from '@bifravst/from-env'
+import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import {
 	lwm2mToSenML,
+	SenML,
 	type SenMLType,
 } from '@hello.nrfcloud.com/proto-map/senml'
-import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
-import { SenML } from '@hello.nrfcloud.com/proto-map/senml'
-import { publishPayload as publishPayload } from './publishPayload.js'
+import { getDeviceCredentials } from '../settings/credentials.js'
+import { getAccountId } from '../settings/nrfcloud.js'
+import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
+import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
 import {
 	fetchAndParseXML,
 	stationInfo,
 	waterLevelInfo,
 } from './fetchAndParseXML.js'
-import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
 import { getFetchIntervalForAPI } from './getFetchInterval.js'
-import { getDeviceCredentials } from '../settings/credentials.js'
-import { fromEnv } from '@bifravst/from-env'
-import { getAccountId } from '../settings/nrfcloud.js'
+import { publishPayload } from './publishPayload.js'
 import type { Station, StationWaterLevel, WaterLevel } from './Station.js'
+import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
 
 const { stackName } = fromEnv({
 	stackName: 'STACK_NAME',
