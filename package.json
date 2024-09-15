@@ -28,7 +28,7 @@
   "devDependencies": {
     "@aws-sdk/client-iam": "3.651.1",
     "@aws-sdk/client-ssm": "3.651.1",
-    "@bifravst/aws-cdk-lambda-helpers": "1.9.52",
+    "@bifravst/aws-cdk-lambda-helpers": "1.9.53",
     "@bifravst/ci": "2.0.2",
     "@bifravst/eslint-config-typescript": "6.1.15",
     "@bifravst/prettier-config": "1.1.0",
