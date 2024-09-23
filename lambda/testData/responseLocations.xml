@@ -1,5 +1,5 @@
 <tide xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="http://api.sehavniva.no/stationinfo.xsd">
+xsi:noNamespaceSchemaLocation="https://vannstand.kartverket.no/stationinfo.xsd">
 <meta licenseurl="http://kartverket.no/data/lisens/"/>
 <stationinfo>
 <location name="Andenes" code="ANX" latitude="69.326067" longitude="16.134848" type="PERM"/>

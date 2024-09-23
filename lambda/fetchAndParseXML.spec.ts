@@ -3,6 +3,7 @@ import nock from 'nock'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import path from 'path'
+import { endpoint } from './constants.js'
 import {
 	fetchAndParseXML,
 	stationInfo,
@@ -13,7 +14,7 @@ import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiRespon
 
 void describe('fetchXML', () => {
 	void it('should fetch XML data and parse it for stationInfo', async () => {
-		const scope = nock('http://api.sehavniva.no')
+		const scope = nock(endpoint)
 		const testData = await readFile(
 			path.join('lambda', 'testData', 'responseLocations.xml'),
 		)
@@ -23,7 +24,7 @@ void describe('fetchXML', () => {
 			.reply(200, content)
 		const res = await fetchAndParseXML(
 			stationInfo,
-			'http://api.sehavniva.no/tideapi.php?tide_request=stationlist&type=perm',
+			`${endpoint}/tideapi.php?tide_request=stationlist&type=perm`,
 		)
 		assert.equal(scope.isDone(), true)
 		assert.equal('error' in res, false)
@@ -33,7 +34,7 @@ void describe('fetchXML', () => {
 		)
 	})
 	void it('should fetch XML data and parse it for water level data from one station (ANX)', async () => {
-		const scope = nock('http://api.sehavniva.no')
+		const scope = nock(endpoint)
 		const waterLevelData = await readFile(
 			path.join('lambda', 'testData', 'responseWaterLevel.xml'),
 		)
@@ -45,7 +46,7 @@ void describe('fetchXML', () => {
 			.reply(200, waterLevelcontent)
 		const res = await fetchAndParseXML(
 			waterLevelInfo,
-			`http://api.sehavniva.no/tideapi.php?tide_request=locationdata&lat=69.326067&lon=16.134848&datatype=OBS&lang=en&place=&dst=1&refcode=CD&fromtime=2024-03-01T09:00&totime=2024-03-01T11:00&interval=10`,
+			`${endpoint}/tideapi.php?tide_request=locationdata&lat=69.326067&lon=16.134848&datatype=OBS&lang=en&place=&dst=1&refcode=CD&fromtime=2024-03-01T09:00&totime=2024-03-01T11:00&interval=10`,
 		)
 		assert.equal(scope.isDone(), true)
 		assert.equal('error' in res, false)
@@ -55,7 +56,7 @@ void describe('fetchXML', () => {
 		)
 	})
 	void it('should return error if there is no data', async () => {
-		const scope = nock('http://api.sehavniva.no')
+		const scope = nock(endpoint)
 		const testData = await readFile(
 			path.join('lambda', 'testData', 'noData.xml'),
 		)
@@ -67,7 +68,7 @@ void describe('fetchXML', () => {
 			.reply(200, content)
 		const res = await fetchAndParseXML(
 			waterLevelInfo,
-			`http://api.sehavniva.no/tideapi.php?tide_request=locationdata&lat=69.326067&lon=16.134848&datatype=OBS&lang=en&place=&tzone=0&dst=1&refcode=CD&fromtime=2024-03-01T09:00&totime=2024-03-01T11:00&interval=10`,
+			`${endpoint}/tideapi.php?tide_request=locationdata&lat=69.326067&lon=16.134848&datatype=OBS&lang=en&place=&tzone=0&dst=1&refcode=CD&fromtime=2024-03-01T09:00&totime=2024-03-01T11:00&interval=10`,
 		)
 		assert.equal(scope.isDone(), true)
 		assert.deepEqual(res, { error: new Error('No data') })

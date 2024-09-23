@@ -28,8 +28,8 @@ For each water level station (e.g. `BGO` or `TRD`) a device has been
 
 Using the credentials created during the registration process, the code in this
 repository now connects to the
-[API for water level data](https://api.sehavniva.no/tideapi_en.html) and fetches
-the most recent measurements.
+[API for water level data](https://vannstand.kartverket.no/tideapi_en.html) and
+fetches the most recent measurements.
 
 The measurements are then converted to the LwM2M object `14230`, serialized as
 [SenML](https://datatracker.ietf.org/doc/html/rfc8428) and published on the
