@@ -1,9 +1,10 @@
+import { endpoint } from '../constants.js'
+
 export const parsedApiResponseLocationConverted = {
 	tide: {
 		$: {
 			'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-			'xsi:noNamespaceSchemaLocation':
-				'http://api.sehavniva.no/stationinfo.xsd',
+			'xsi:noNamespaceSchemaLocation': `${endpoint}/stationinfo.xsd`,
 		},
 		meta: [
 			{

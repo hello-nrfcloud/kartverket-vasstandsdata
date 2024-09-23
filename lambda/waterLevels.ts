@@ -8,6 +8,7 @@ import {
 } from '@hello.nrfcloud.com/proto-map/senml'
 import { getDeviceCredentials } from '../settings/credentials.js'
 import { getAccountId } from '../settings/nrfcloud.js'
+import { endpoint } from './constants.js'
 import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
 import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
 import {
@@ -32,7 +33,7 @@ const accountId = await getAccountId({ ssm, stackName })
 const getLocation = async () => {
 	const res = await fetchAndParseXML(
 		stationInfo,
-		'http://api.sehavniva.no/tideapi.php?tide_request=stationlist&type=perm',
+		`${endpoint}/tideapi.php?tide_request=stationlist&type=perm`,
 	)
 	if ('error' in res) {
 		console.error(res.error)
@@ -50,7 +51,7 @@ const getWaterLevelsForStation = async (
 ) => {
 	const res = await fetchAndParseXML(
 		waterLevelInfo,
-		`https://api.sehavniva.no/tideapi.php?tide_request=locationdata&lat=${station.location.lat}&lon=${station.location.lng}&datatype=OBS&lang=en&place=&dst=1&refcode=CD&tzone=0&fromtime=${from}&totime=${to}&interval=10`,
+		`${endpoint}/tideapi.php?tide_request=locationdata&lat=${station.location.lat}&lon=${station.location.lng}&datatype=OBS&lang=en&place=&dst=1&refcode=CD&tzone=0&fromtime=${from}&totime=${to}&interval=10`,
 	)
 	if ('error' in res) {
 		console.error(res.error)

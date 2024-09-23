@@ -2,7 +2,7 @@
   "tide": {
     "$": {
       "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:noNamespaceSchemaLocation": "http://api.sehavniva.no/stationinfo.xsd"
+      "xsi:noNamespaceSchemaLocation": "https://vannstand.kartverket.no/stationinfo.xsd"
     },
     "meta": [
       {
