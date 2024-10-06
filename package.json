@@ -78,7 +78,7 @@
   },
   "prettier": "@bifravst/prettier-config",
   "dependencies": {
-    "@bifravst/aws-ssm-settings-helpers": "1.2.35",
+    "@bifravst/aws-ssm-settings-helpers": "1.2.38",
     "@bifravst/from-env": "3.0.2",
     "@hello.nrfcloud.com/proto": "15.3.5",
     "@hello.nrfcloud.com/proto-map": "16.1.11",
