@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-
 import { convertDataTypesFromAPI } from './convertDataTypesFromAPI.js'
-import parsedApiResponseLocation from './testData/parsedApiResponseLocation.json'
+import parsedApiResponseLocation from './testData/parsedApiResponseLocation.json' assert { type: 'json' }
 import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.js'
-import parsedApiResponseWaterLevel from './testData/parsedApiResponseWaterLevel.json'
+import parsedApiResponseWaterLevel from './testData/parsedApiResponseWaterLevel.json' assert { type: 'json' }
 import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
+
 void describe('convertDataTypesFromAPI', () => {
 	void it('should convert the coordinates from string to number', () => {
 		assert.deepEqual(
