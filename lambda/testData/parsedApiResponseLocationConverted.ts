@@ -1,4 +1,4 @@
-import { endpoint } from '../constants.js'
+import { endpoint } from '../constants.ts'
 
 export const parsedApiResponseLocationConverted = {
 	tide: {

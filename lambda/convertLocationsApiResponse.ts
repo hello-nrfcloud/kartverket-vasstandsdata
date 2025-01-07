@@ -1,6 +1,6 @@
 import type { Static } from '@sinclair/typebox'
-import type { stationInfo } from './fetchAndParseXML.js'
-import type { Station } from './Station.js'
+import type { stationInfo } from './fetchAndParseXML.ts'
+import type { Station } from './Station.ts'
 
 export const convertLocationsAPIResponse = (
 	data: Static<typeof stationInfo>,

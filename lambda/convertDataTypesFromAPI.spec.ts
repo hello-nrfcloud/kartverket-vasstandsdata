@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { convertDataTypesFromAPI } from './convertDataTypesFromAPI.js'
+import { convertDataTypesFromAPI } from './convertDataTypesFromAPI.ts'
 import parsedApiResponseLocation from './testData/parsedApiResponseLocation.json' assert { type: 'json' }
-import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.js'
+import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.ts'
 import parsedApiResponseWaterLevel from './testData/parsedApiResponseWaterLevel.json' assert { type: 'json' }
-import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
+import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.ts'
 
 void describe('convertDataTypesFromAPI', () => {
 	void it('should convert the coordinates from string to number', () => {

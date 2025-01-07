@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { getFetchIntervalForAPI } from './getFetchInterval.js'
+import { getFetchIntervalForAPI } from './getFetchInterval.ts'
 
 void describe('getFetchInterval', () => {
 	void it('should return a fetch interval of one hour back in time in UTC time.', () => {

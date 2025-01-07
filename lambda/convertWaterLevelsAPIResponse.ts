@@ -1,6 +1,6 @@
 import type { Static } from '@sinclair/typebox'
-import type { waterLevelInfo } from './fetchAndParseXML.js'
-import type { WaterLevel } from './Station.js'
+import type { waterLevelInfo } from './fetchAndParseXML.ts'
+import type { WaterLevel } from './Station.ts'
 
 export const convertWaterLevelsAPIResponse = (
 	data: Static<typeof waterLevelInfo>,

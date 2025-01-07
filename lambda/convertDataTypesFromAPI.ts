@@ -1,7 +1,7 @@
 import {
 	type stationInfoType,
 	type waterLevelInfoType,
-} from './fetchAndParseXML.js'
+} from './fetchAndParseXML.ts'
 export type stationInfoTypeFromAPI = {
 	tide: {
 		stationinfo: {

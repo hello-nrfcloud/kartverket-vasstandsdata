@@ -1,6 +1,6 @@
 import type { SenMLType } from '@hello.nrfcloud.com/proto-map/senml'
 import { connect } from 'mqtt'
-import type { Credentials } from '../settings/credentials.js'
+import type { Credentials } from '../settings/credentials.ts'
 
 const amazonRootCA1 =
 	'-----BEGIN CERTIFICATE-----\n' +

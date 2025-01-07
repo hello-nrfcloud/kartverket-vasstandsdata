@@ -1,7 +1,7 @@
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import { Type, type Static, type TObject } from '@sinclair/typebox'
 import xml2js from 'xml2js'
-import { convertDataTypesFromAPI } from './convertDataTypesFromAPI.js'
+import { convertDataTypesFromAPI } from './convertDataTypesFromAPI.ts'
 
 export const parser = new xml2js.Parser()
 

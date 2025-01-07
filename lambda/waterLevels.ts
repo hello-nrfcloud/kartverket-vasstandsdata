@@ -6,20 +6,20 @@ import {
 	SenML,
 	type SenMLType,
 } from '@hello.nrfcloud.com/proto-map/senml'
-import { getDeviceCredentials } from '../settings/credentials.js'
-import { getAccountId } from '../settings/nrfcloud.js'
-import { endpoint } from './constants.js'
-import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
-import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
+import { getDeviceCredentials } from '../settings/credentials.ts'
+import { getAccountId } from '../settings/nrfcloud.ts'
+import { endpoint } from './constants.ts'
+import { convertLocationsAPIResponse } from './convertLocationsApiResponse.ts'
+import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.ts'
 import {
 	fetchAndParseXML,
 	stationInfo,
 	waterLevelInfo,
-} from './fetchAndParseXML.js'
-import { getFetchIntervalForAPI } from './getFetchInterval.js'
-import { publishPayload } from './publishPayload.js'
-import type { Station, StationWaterLevel, WaterLevel } from './Station.js'
-import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.js'
+} from './fetchAndParseXML.ts'
+import { getFetchIntervalForAPI } from './getFetchInterval.ts'
+import { publishPayload } from './publishPayload.ts'
+import type { Station, StationWaterLevel, WaterLevel } from './Station.ts'
+import { waterLevelObjectToLwM2M } from './waterLevelObjectToLwM2M.ts'
 
 const { stackName } = fromEnv({
 	stackName: 'STACK_NAME',

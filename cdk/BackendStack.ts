@@ -12,9 +12,9 @@ import {
 	aws_lambda as Lambda,
 	Stack,
 } from 'aws-cdk-lib'
-import type { BackendLambdas } from './lambdas.js'
-import { ContinuousDeployment } from './resources/ContinuousDeployment.js'
-import { STACK_NAME } from './stackConfig.js'
+import type { BackendLambdas } from './lambdas.ts'
+import { ContinuousDeployment } from './resources/ContinuousDeployment.ts'
+import { STACK_NAME } from './stackConfig.ts'
 
 export class BackendStack extends Stack {
 	constructor(

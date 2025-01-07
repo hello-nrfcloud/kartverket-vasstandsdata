@@ -3,14 +3,14 @@ import nock from 'nock'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import path from 'path'
-import { endpoint } from './constants.js'
+import { endpoint } from './constants.ts'
 import {
 	fetchAndParseXML,
 	stationInfo,
 	waterLevelInfo,
-} from './fetchAndParseXML.js'
-import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.js'
-import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
+} from './fetchAndParseXML.ts'
+import { parsedApiResponseLocationConverted } from './testData/parsedApiResponseLocationConverted.ts'
+import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.ts'
 
 void describe('fetchXML', () => {
 	void it('should fetch XML data and parse it for stationInfo', async () => {

@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.js'
-import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.js'
+import { convertWaterLevelsAPIResponse } from './convertWaterLevelsAPIResponse.ts'
+import { parsedApiResponseWaterLevelConverted } from './testData/parsedApiResponseWaterLevelConverted.ts'
 
 void describe('convertWaterLevelsApiResponse', () => {
 	void it('should convert waterlevel api response to type WaterLevel[]', () => {

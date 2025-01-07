@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import xml2js from 'xml2js'
-import { convertLocationsAPIResponse } from './convertLocationsApiResponse.js'
+import { convertLocationsAPIResponse } from './convertLocationsApiResponse.ts'
 
 export const parser = new xml2js.Parser()
 
